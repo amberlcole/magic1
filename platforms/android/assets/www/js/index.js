@@ -16,6 +16,8 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+		
+	});
 
     },
     // Update DOM on a Received Event
@@ -30,13 +32,10 @@ var app = {
         console.log('Received Event: ' + id);
     }
 	
-	$(idescription).on("tap",function(){
-		$(this).show();
-	});
 	
-	//function showInfo() {
-	//	document.getElementById("idescription").style.display = "inline-block";
-	//}
+	function showInfo() {
+		document.getElementById("idescription").style.display = "inline-block";
+	}
 	
 	//Here's where my code startsssssssssssssssssssssssssssssssssssss
 	public function navigate(current,next){

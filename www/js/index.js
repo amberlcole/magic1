@@ -17,8 +17,6 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
 		
-		$(idescription).on("tap",function(){
-		$(this).show();
 	});
 
     },
