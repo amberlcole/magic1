@@ -1,8 +1,5 @@
 var app = {
-	
-	function showInfo() {
-	document.getElementById("idescription").style.display = "inline-block";
-}
+
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -20,6 +17,8 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+		alert("got here!");
+
 		
 	});
 
@@ -47,4 +46,3 @@ var app = {
 };
 
 app.initialize();
-
