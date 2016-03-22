@@ -1,4 +1,8 @@
 var app = {
+	
+	function showInfo() {
+	document.getElementById("idescription").style.display = "inline-block";
+}
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -33,9 +37,7 @@ var app = {
     }
 	
 	
-	function showInfo() {
-		document.getElementById("idescription").style.display = "inline-block";
-	}
+
 	
 	//Here's where my code startsssssssssssssssssssssssssssssssssssss
 	public function navigate(current,next){
@@ -45,3 +47,4 @@ var app = {
 };
 
 app.initialize();
+
