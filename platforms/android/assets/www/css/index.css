@@ -3,9 +3,6 @@ light blue - #99ccff
 dark blue - #003366
 
 */ 
-* {
-    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
-}
 
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
@@ -99,7 +96,7 @@ button.d1{
 	color: #003366;
 	font-family: tahoma;
 	font-size: 20px;
-	font-style: underline;
+	text-decoration: underline;
 }
 
 

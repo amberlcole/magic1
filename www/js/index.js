@@ -17,10 +17,6 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-		alert("got here!");
-
-		
-	});
 
     },
     // Update DOM on a Received Event
@@ -36,13 +32,6 @@ var app = {
     }
 	
 	
-
-	
-	//Here's where my code startsssssssssssssssssssssssssssssssssssss
-	public function navigate(current,next){
-		document.getElementById(current).style.display = "none";
-		document.getElementById(current).style.display = "inline-block";
-	}
 };
 
 app.initialize();
