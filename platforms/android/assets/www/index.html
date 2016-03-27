@@ -2,37 +2,53 @@
 <html>
     <head>
 		<meta charset="UTF-8">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <script type="text/javascript" src="js/index.js"></script>
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 		<link rel="stylesheet" type="text/css" href="css/index.css">
-        
-		<title>Hello World</title>
-    </head>
-    <body>
-		<div class="container">
 		
-			<!-- Choosing Algorithm Page -->
-			<div class="app" id="page1">
-				<button name="rbutton" class="p1">Random Itinerary</button>
-				<button name="cbutton" class="p1">Custom Itinerary</button>
+		<title>Magic Itinerary Maker</title>
+		
+		<script type="text/javascript" src="libs/jquery.js"></script>
+		<script type="text/javascript" src="libs/jquery.mobile-1.4.5.js"></script>
+		<script type="text/javascript" src="libs/SQLitePlugin.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+	</head>
+	
+	<body>
+		<div class="container">
+			<div class="header">
+				<button id="return" class="back">Back</button>
+				Magic Itinerary Maker
+			</div>
 			
-				<button class="d1" ontap="showInfo()">What are these?</button>
-			
-				<div id="idescription">
+			<!-- Algorithm Descriptions -->
+			<div id="idescription">
 				Random: Features a random selection of the top 20 park Activities, 
 				will not take into account height restrictions or relative location.
 				<hr>
 				Custom: Features a selection of 20 park Activities based on your 
 				responses to a few questions about your park desires, heights, and 
 				relative location of each Activity.
-				</div>
-			
+			</div>
+			<div id="c2" class="container">
 			</div>
 			
+			<!-- Choosing Algorithm Page -->
+			<div id="page1" class="app">
+				<button id="cbutton" class="p1">Custom Itinerary</button>
+				<button id="rbutton" class="p1">Random Itinerary</button>
+			
+				<button id="ibutton" class="d1">What is the difference?</button>
+			</div>
+
 			<!-- Question Page 1-->
 			<div class="app" id="page2">
-				<h1>Which Parks Will you Be Visting?</h1>
+				<h1>Which parks will you be visiting?</h1>
 				
+				<select class="q" size="1" multiple="multiple">
+					<option value="Disneyland">Disneyland</option>
+					<option value="California Adventure">California Adventure</option>
+				</select>
+
 			</div>
 			
 			<!-- Custom: Question Page 2 -->
@@ -42,13 +58,24 @@
 			
 			<!-- Activity Display Page -->
 			<div class="app" id="page4">
-				<h1>Aww yiiis</h1>
+				<h1>My Itinerary</h1>
+
+				<ol>
+					<li>Haunted Mansion</li>
+					<li>Pirates of the Carribean</li>
+					<li>Splash Mountain</li>
+					<li>The Many Adventures of Winnie...</li>
+					<li>Hungry Bear Restaurant</li>
+				</ol>
+			</div>
+			
+			<div id="page5" class="app">
+			
 			</div>
 		</div>
+		
         <script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/magic.js"></script>
-		<script type="text/javascript" src="libs/jquery.js"></script>
-		<script type="text/javascript" src="libs/Tocca.js"></script>
         
     </body>
 </html>
