@@ -60,14 +60,18 @@ Divs
 }
 
 #idescription{
-	position:relative;
+	position:absolute;
+	left:5%;
+	top:30%;
+	z-index:1;
 	opacity:1;
 	display:none;
 	width:80%;
 	background-color: #99ccff;
 	color: #003366;
+	font-size:16px;
 	text-align: justify;
-	padding: 10px;
+	padding: 5%;
 	margin: 0 auto;
 }
 

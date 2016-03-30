@@ -2,6 +2,7 @@
 <html>
     <head>
 		<meta charset="UTF-8">
+		<meta http-equiv="Content-Security-Policy"/>
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 		<link rel="stylesheet" type="text/css" href="css/index.css">
 		
@@ -22,18 +23,22 @@
 			
 			<!-- Algorithm Descriptions -->
 			<div id="idescription">
-				Random: Features a random selection of the top 20 park Activities, 
+				<strong>Random:</strong> Features a random selection of the top 20 park Activities, 
 				will not take into account height restrictions or relative location.
 				<hr>
-				Custom: Features a selection of 20 park Activities based on your 
+				<strong>Custom:</strong> Features a selection of 20 park Activities based on your 
 				responses to a few questions about your park desires, heights, and 
-				relative location of each Activity.
+				relative location of each Activity.<br />
+				<center>
+					<strong>Tap to close</strong>
+				</center>
 			</div>
 			<div id="c2" class="container">
 			</div>
 			
 			<!-- Choosing Algorithm Page -->
 			<div id="page1" class="app">
+				<h1>How would you like your magic made?</h1>
 				<button id="cbutton" class="p1">Custom Itinerary</button>
 				<button id="rbutton" class="p1">Random Itinerary</button>
 			
@@ -43,6 +48,8 @@
 			<!-- Question Page 1-->
 			<div class="app" id="page2">
 				<h1>Which parks will you be visiting?</h1>
+				
+				
 				
 				<select class="q" size="1" multiple="multiple">
 					<option value="Disneyland">Disneyland</option>
