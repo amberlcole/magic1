@@ -23,10 +23,10 @@
 			
 			<!-- Algorithm Descriptions -->
 			<div id="idescription">
-				<strong>Random:</strong> Features a random selection of the top 20 park Activities, 
+				<strong>Random:</strong> Features a random selection of the top 10 park Activities, 
 				will not take into account height restrictions or relative location.
 				<hr>
-				<strong>Custom:</strong> Features a selection of 20 park Activities based on your 
+				<strong>Custom:</strong> Features a selection of 10 park Activities based on your 
 				responses to a few questions about your park desires, heights, and 
 				relative location of each Activity.<br />
 				<center>
@@ -49,13 +49,16 @@
 			<div class="app" id="page2">
 				<h1>Which parks will you be visiting?</h1>
 				
-				
-				
-				<select class="q" size="1" multiple="multiple">
-					<option value="Disneyland">Disneyland</option>
-					<option value="California Adventure">California Adventure</option>
-				</select>
-
+				<form id="parkq">
+					<input id="dland" type="checkbox" class="park" value="Disneyland">
+					Disneyland
+					
+					<input id="advent" type="checkbox" class="park" value="California Adventure">
+					California Adventure
+					
+					<!--<input id="q1" type="submit" value="submit">-->
+				</form>
+				<button id="q1" class="p1">Next</button>
 			</div>
 			
 			<!-- Custom: Question Page 2 -->
@@ -67,13 +70,12 @@
 			<div class="app" id="page4">
 				<h1>My Itinerary</h1>
 
-				<ol>
-					<li>Haunted Mansion</li>
-					<li>Pirates of the Carribean</li>
-					<li>Splash Mountain</li>
-					<li>The Many Adventures of Winnie...</li>
-					<li>Hungry Bear Restaurant</li>
-				</ol>
+				<table id="iresults" border="1px">
+					<tbody>
+					<tr class="hideme"></tr>
+					</tbody>
+				</table>
+				
 			</div>
 			
 			<div id="page5" class="app">

@@ -9,9 +9,7 @@ $(document).ready(function (){
 	
     //Random button actions
 	$("#rbutton").on("tap", function(){
-	    randomItinerary();
-	   // testPrint(randomArray);
-		
+	    //randomItinerary();
 		navigation(page1, page2);
 	});
 	
@@ -27,13 +25,28 @@ $(document).ready(function (){
 	});
 
 /************Page 2 Javascript************/	
-
-	
+	$("#q1").on("tap", function(){
+		
+		var cv1 = $('#dland:checked').val();
+		var cv2 = $('#advent:checked').val();
+		
+		if(cv1 == undefined && cv2 == undefined){
+			//show warning
+			console.log("please select your parks");
+		}else{
+			if($('#dland:checked').val() == undefined){
+				var cv1 = "none";
+			}
+		
+			if($('#advent:checked').val() == undefined){
+				var cv2 = "none";
+			}
+		}
+		console.log(cv1);
+		console.log(cv2);
+		//var cv2 = $('#advent:checked').val();
+	});
 });
-
-function descript(){
-	
-};
 
 function navigation(c,n){
 	$( c ).hide();
@@ -41,87 +54,41 @@ function navigation(c,n){
 };
 
 function randomItinerary(){
-    //Opens database file for query
-
 	var db = window.sqlitePlugin.openDatabase({name: 'events.db', createFromLocation: 1, iosDatabaseLocation: 'default'});
-	//var crs = db.executeSql('SELECT * FROM EVENTS', [], querySuccess, errorCB);
-	exeSql();
+	selectRow("SELECT * FROM events WHERE Rank <= 10 AND Rank > 0 ORDER BY RANDOM()", 
+			 function(doTheThing) {});
 	
-	//console.log(crs);
-	
-  /*  String[] randomArray = new String[crs.getCount()];
-    int i = 0;
-            
-    //Writes the top ten events into array
-    while(crs.moveToNext()){
-        if (i < 10){
-            String rideName = crs.getString(crs.getColumnIndex("NAME"));
-            array[i] = rideName;
-            i++;
-        }
-        else {
-            randomize(randomArray);
-        }   
-    }*/
 };
 
-/** Initialize Database  **/
-function exeSql(){ 
-   selectRow("SELECT * FROM events;", function(pleaseWork) {
-     //console.log(pleaseWork);
-     // any further processing here
-   });
-}; 
-
-/** Select Row from Table **/ 
-function selectRow(query, callBack){ // <-- extra param
-   var db = window.sqlitePlugin.openDatabase({name: 'events.db', createFromLocation: 1, iosDatabaseLocation: 'default'});
-   var result = [];
-   db.transaction(function (tx) {
+/** Select Rows from Table **/ 
+function selectRow(query, callBack){
+	var db = window.sqlitePlugin.openDatabase({name: 'events.db', 
+											  createFromLocation: 1, 
+											  iosDatabaseLocation: 'default'});
+	var result = [];
+	db.transaction(function (tx) {
 		tx.executeSql(query, [], function(tx, rs){
-			for(var i=0; i<rs.rows.length; i++) {
+			for(var i=0; i<rs.rows.length; i++){
 				var row = rs.rows.item(i);
-				result[i] = { id: row['Rank'],
-                          name: row['Name']
-						}
+				result[i] = row['Name'].toString();
 			}
 		console.log(result);
-		callBack(result); // <-- new bit here
+		sendToGui(result);
+		callBack(result); 
 		}, errorCB);
    });
 };
 
-function querySuccess(){
-	console.log("Database query successful.");
+function sendToGui(array){
+	for(var i=0; i<array.length; i++){
+		var table = document.getElementById ("iresults");
+        var row = table.insertRow (1);
+        var cell = row.insertCell (0);
+        cell.innerHTML = array[i];
+	}
+	
 };
 
 function errorCB(){
 	console.log("Query not successful");
-};
-
-//Fisher-Yates Shuffle
-function randomize(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    //While there remain elements to shuffle...
-    while (0 != currentIndex) {
-
-        //Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        //And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-};
-
-function testPrint(array){
-    //TEST STATEMENT to print all array elements
-    for (var i = 0; i < array.length; i++) {
-        console.log("Index " + i + " has value of: " + array[i] + "<br />");
-	}
 };

@@ -50,6 +50,11 @@ Divs
     }
 }
 
+#iresults{
+	height:80%;
+	overflow:auto;
+}
+
  #page2, #page3, #page4{
 	display:none;
 }
@@ -94,20 +99,24 @@ hr{
 	height:90%;
 }
 
-li{
+tr{
 	width:100%;
 	color:#003366;
 	background-color:#99ccff;
 	font-size:25px;
 	border-bottom:5px white solid;
-	line-height:105px;
 	list-style-type:none;
+	white-space:nowrap;
 }
 
 /****************************************************
 Buttons and Links
 ****************************************************/
 #return{
+	display:none;
+}
+
+.hideme{
 	display:none;
 }
 

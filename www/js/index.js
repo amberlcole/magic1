@@ -14,7 +14,9 @@ var app = {
     // deviceready Event Handler
     onDeviceReady: function() {
 		$("#page1").show();
-		var db = window.sqlitePlugin.openDatabase({name: 'events.db', createFromLocation: 1, iosDatabaseLocation: 'default'});
+		var db = window.sqlitePlugin.openDatabase({name: 'events.db', 
+												   createFromLocation: 1, 
+												   iosDatabaseLocation: 'default'});
 	}
 	
 };
