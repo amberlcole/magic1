@@ -10,7 +10,7 @@ $(document).ready(function (){
     //Random button actions
 	$("#rbutton").on("tap", function(){
 	    //randomItinerary();
-	    navigation(page1, page2);
+		navigation(page1, page2);
 	});
 	
 	//Description button action
@@ -26,22 +26,25 @@ $(document).ready(function (){
 
 /************Page 2 Javascript************/	
 	$("#q1").on("tap", function(){
-
-		navigation(page2, page4);
-        
-        //Checks which boxes are checked and calls the correct function query
-		if ((document.getElementById('dland').checked) && (document.getElementById('advent').checked)) {
-		    randomItinerary1();
+		
+		var cv1 = $('#dland:checked').val();
+		var cv2 = $('#advent:checked').val();
+		
+		if(cv1 == undefined && cv2 == undefined){
+			//show warning
+			console.log("please select your parks");
+		}else{
+			if($('#dland:checked').val() == undefined){
+				var cv1 = "none";
+			}
+		
+			if($('#advent:checked').val() == undefined){
+				var cv2 = "none";
+			}
 		}
-		else if (document.getElementById('dland').checked) {
-		    randomItinerary2();
-		}
-		else if (document.getElementById('advent').checked) {
-		    randomItinerary3();
-		}
-		else {
-		    alert("You didn't select and parks");
-		}
+		console.log(cv1);
+		console.log(cv2);
+		//var cv2 = $('#advent:checked').val();
 	});
 });
 
@@ -50,20 +53,11 @@ function navigation(c,n){
 	$( n ).show();
 };
 
-function randomItinerary1(){
-    var db = window.sqlitePlugin.openDatabase({ name: 'events.db', createFromLocation: 1, iosDatabaseLocation: 'default' });
-    selectRow("SELECT * FROM events WHERE ((Rank < 7  AND Rank > 0) AND Park='Disneyland') OR ((Rank < 15 AND Rank > 0) AND Park='California Adventure') ORDER BY RANDOM()",
-        function (placeHolder) { });
-};
-
-function randomItinerary2(){
-    selectRow("SELECT * FROM events WHERE ((Rank < 17 AND Rank > 0) AND Park='Disneyland') ORDER BY RANDOM()",
-         function (placeHolder) { });
-};
-
-function randomItinerary3(){
-    selectRow("SELECT * FROM events WHERE ((Rank < 33 AND Rank > 0) AND Park='California Adventure') ORDER BY RANDOM()",
-         function (placeHolder) { });
+function randomItinerary(){
+	var db = window.sqlitePlugin.openDatabase({name: 'events.db', createFromLocation: 1, iosDatabaseLocation: 'default'});
+	selectRow("SELECT * FROM events WHERE Rank <= 10 AND Rank > 0 ORDER BY RANDOM()", 
+			 function(doTheThing) {});
+	
 };
 
 /** Select Rows from Table **/ 
@@ -92,6 +86,7 @@ function sendToGui(array){
         var cell = row.insertCell (0);
         cell.innerHTML = array[i];
 	}
+	
 };
 
 function errorCB(){
