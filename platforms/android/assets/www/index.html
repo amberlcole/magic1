@@ -49,21 +49,71 @@
 			<div class="app" id="page2">
 				<h1>Which parks will you be visiting?</h1>
 				
-				<form id="parkq">
-					<input id="dland" type="checkbox" class="park" value="Disneyland">
-					Disneyland<br>
+				<form id="parkq" class="question">
+					<span><input id="dland" type="checkbox" class="park" value="Disneyland">
+					Disneyland</span>
 					
 					<input id="advent" type="checkbox" class="park" value="California Adventure">
 					California Adventure
 					
-					<!--<input id="q1" type="submit" value="submit">-->
 				</form>
 				<button id="q1" class="p1">Next</button>
 			</div>
 			
 			<!-- Custom: Question Page 2 -->
 			<div class="app" id="page3">
-				<h1></h1>
+				<h1>What type of rides would you like included in your itinerary?</h1>
+				
+				<form id="typeq" class="question">
+					<input id="t" type="checkbox" class="type" value="Thrill">
+					Thrill<br>
+					
+					<input id="m" type="checkbox" class="type" value="Mild">
+					Mild<br>
+					
+					<input id="d" type="checkbox" class="type" value="Dark">
+					Dark<br>
+					
+					<input id="w" type="checkbox" class="type" value="Water">
+					Water<br>
+
+					<input id="tr" type="checkbox" class="type" value="Transportation">
+					Transportation<br>
+					
+					<label><input id="i" type="checkbox" class="type" value="Interactive">
+					Interactive</label>
+				</form>
+				<button id="q2" class="p1">Next</button>
+			</div>
+			
+			<!-- Custom: Question Page 3 -->
+			<div class="app" id="page31">
+				<h1>What is the height of your shortest party member?</h1>
+				
+				<form id="typeq" class="question">
+					<input id="thirtytwo" type="radio" name="height" value="32">
+					32<br>
+					
+					<input id="thirtyfive" type="radio" name="height" value="35">
+					35<br>
+					
+					<input id="forty" type="radio" name="height" value="40">
+					40<br>
+					
+					<input id="fortytwo" type="radio" name="height" value="42">
+					42<br>
+					
+					<input id="fortysix" type="radio" name="height" value="46">
+					46<br>
+
+					<input id="fortyeight" type="radio" name="height" value="48">
+					48<br>
+					
+					<input id="n" type="radio" name="height" value="none">
+					None
+					
+				</form>
+				<button id="q3" class="p1">Next</button>
 			</div>
 			
 			<!-- Activity Display Page -->
@@ -79,7 +129,14 @@
 			</div>
 			
 			<div id="page5" class="app">
-			
+				<h1>Haunted Mansion</h1>
+				<img src="img/hm.jpeg" width="60%">
+				<div id="adescription">
+				Area: New Orleans Square<br>
+				Height Requirement: None<br>
+				Fastpass Available<br>
+				Description: Dark, Mild<br>
+				</div>
 			</div>
 		</div>
 		
