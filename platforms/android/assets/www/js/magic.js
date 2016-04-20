@@ -36,7 +36,7 @@ $(document).ready(function (){
 		});
 		
 		console.log(parkArray);
-		        
+        
         //Checks which boxes are checked and calls the correct function query
 		if ((document.getElementById('dland').checked) && (document.getElementById('advent').checked)) {
 		    randomItinerary1();
@@ -56,7 +56,7 @@ $(document).ready(function (){
 		
 	});
 	
-/************Page 3 Javascript************/			
+/************Page 3.1 Javascript************/			
 	$("#q2").on("tap", function(){
 		
         //type id = t,m,d,w,dr,i
@@ -67,33 +67,56 @@ $(document).ready(function (){
 		console.log(typeArray);
 		
 		if( typeArray.length == 0 ){
-			alert("You didn't select any type")
+			alert("You didn't select any type");
 		}else{
 			navigation(page3,page31);
 		}
 	});
 	
-/************Page 4 Javascript************/			
+/************Page 3.2 Javascript************/			
 	$("#q3").on("tap", function(){
 		var heightReq = $('input[name="height"]:checked').val();
 		console.log(heightReq);
 		
-		customItinerary(parkArray,typeArray,heightReq);
-		navigation(page31,page4);
+		if(heightReq!=null){
+			customItinerary(parkArray,typeArray,heightReq);
+			navigation(page31,page4);
+		}else{
+			alert("Please select a height");
+		}
 	});
+
+/************Page 4 Javascript************/			
+	$(document).on("tap", "td", function(){
+		var selected = $(this).text();
+		
+		if(selected.search("'")!= -1){
+			selected = selected.replace("'","''");
+		}
+		
+		var stringToSend = "SELECT * FROM events WHERE Name='" + selected + "'";
+		activityDisplay(stringToSend, function (placeHolder) { } );
+		navigation(page4,page5);
+	});
+	
+/************Page 5 Javascript************/			
+	$("#b3").on("tap", function(){
+		navigation(page5,page4);
+	});
+
 });
 
 function navigation(c,n){
 	$( c ).hide();
-	$( n ).show();
+	$( n ).fadeIn(1000);
 };
 
 function typeSelect(){
-		if( cbit != 1 ){
-			navigation(page2, page4);
-		}else{
-			navigation(page2,page3);
-		};
+	if( cbit != 1 ){
+		navigation(page2, page4);
+	}else{
+		navigation(page2,page3);
+	};
 };
 
 function customItinerary(park, type, height){
@@ -124,19 +147,19 @@ function customItinerary(park, type, height){
 };
 
 function randomItinerary1(){
-    //var db = window.sqlitePlugin.openDatabase({ name: 'events.db', createFromLocation: 1, iosDatabaseLocation: 'default' });
-    //selectRow("SELECT * FROM events WHERE ((Rank < 7  AND Rank > 0) AND Park='Disneyland') OR ((Rank < 15 AND Rank > 0) AND Park='California Adventure') ORDER BY RANDOM()",
-    //    function (placeHolder) { });
+    var db = window.sqlitePlugin.openDatabase({ name: 'events.db', createFromLocation: 1, iosDatabaseLocation: 'default' });
+    selectRow("SELECT * FROM events WHERE ((Rank < 7  AND Rank > 0) AND Park='Disneyland') OR ((Rank < 15 AND Rank > 0) AND Park='California Adventure') ORDER BY RANDOM()",
+        function (placeHolder) { });
 };
 
 function randomItinerary2(){
-   // selectRow("SELECT * FROM events WHERE ((Rank < 17 AND Rank > 0) AND Park='Disneyland') ORDER BY RANDOM()",
-    //     function (placeHolder) { });
+	selectRow("SELECT * FROM events WHERE ((Rank < 17 AND Rank > 0) AND Park='Disneyland') ORDER BY RANDOM()",
+         function (placeHolder) { });
 };
 
 function randomItinerary3(){
-   // selectRow("SELECT * FROM events WHERE ((Rank < 33 AND Rank > 0) AND Park='California Adventure') ORDER BY RANDOM()",
-   //      function (placeHolder) { });
+    selectRow("SELECT * FROM events WHERE ((Rank < 33 AND Rank > 0) AND Park='California Adventure') ORDER BY RANDOM()",
+         function (placeHolder) { });
 };
 
 /** Select Rows from Table **/ 
@@ -159,14 +182,53 @@ function selectRow(query, callBack){
    });
 };
 
+function activityDisplay(query, callBack){
+	console.log(query);
+	var db = window.sqlitePlugin.openDatabase({name: 'events.db', 
+											  createFromLocation: 1, 
+											  iosDatabaseLocation: 'default'});
+	var result = [];
+	db.transaction(function (tx) {
+		tx.executeSql(query, [], function(tx, rs){
+			for(var i=0; i<rs.rows.length; i++){
+				var row = rs.rows.item(i);
+				result[0] = row['Name'].toString();
+				result[1] = row['Park'].toString();
+				result[2] = row['Type'].toString();
+				result[3] = row['Height'].toString();
+				result[4] = row['FastPass'].toString();
+				result[5] = row['Rank'].toString();
+			}
+		console.log(result);
+		pageFive(result);
+		callBack(result); 
+		}, errorCB);
+   });
+};
+
 function sendToGui(array){
 	for(var i=0; i<array.length; i++){
 		var table = document.getElementById ("iresults");
         var row = table.insertRow (1);
+		row.className = "sResult";
         var cell = row.insertCell (0);
         cell.innerHTML = array[i];
 	}
 };
+
+function pageFive(array){
+	$("#nm").html(array[0]);
+	$("#loc").html(array[1]);
+	$("#des").html(array[2]);
+	if(array[4] == "true"){
+		$("#fp").html("Fastpass Available");
+	}else{
+		$("#fp").html("Fastpass Not Available");
+	}
+	$("#hr").html(array[3]);
+	$("#rank").html(array[5]);
+	
+}
 
 function errorCB(){
 	console.log("Query not successful");
