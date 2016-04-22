@@ -12,15 +12,11 @@
 		<script type="text/javascript" src="libs/jquery.mobile-1.4.5.min.js"></script>
 		<script type="text/javascript" src="libs/SQLitePlugin.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/magic.js"></script>
 	</head>
 	
 	<body>
 		<div class="container">
-			<div class="header">
-				<button id="return" class="back">Back</button>
-				Magic Itinerary Maker
-			</div>
-			
 			<!-- Algorithm Descriptions -->
 			<div id="idescription">
 				<strong>Random:</strong> Features a random selection of the top 10 park Activities, 
@@ -38,6 +34,10 @@
 			
 			<!-- Choosing Algorithm Page -->
 			<div id="page1" class="app">
+				<div class="header">
+					Magic Itinerary Maker
+				</div>
+				
 				<h1>How would you like your magic made?</h1>
 				<button id="cbutton" class="p1">Custom Itinerary</button>
 				<button id="rbutton" class="p1">Random Itinerary</button>
@@ -47,6 +47,11 @@
 
 			<!-- Question Page 1-->
 			<div class="app" id="page2">
+				<div class="header">
+					<button id="p2r" class="back">Back</button>
+					Magic Itinerary Maker
+				</div>
+				
 				<h1>Which parks will you be visiting?</h1>
 				
 				<form id="parkq" class="question">
@@ -62,6 +67,11 @@
 			
 			<!-- Custom: Question Page 2 -->
 			<div class="app" id="page3">
+				<div class="header">
+					<button id="p3r" class="back">Back</button>
+					Magic Itinerary Maker
+				</div>
+				
 				<h1>What type of rides would you like included in your itinerary?</h1>
 				
 				<form id="typeq" class="question">
@@ -88,6 +98,10 @@
 			
 			<!-- Custom: Question Page 3 -->
 			<div class="app" id="page31">
+				<div class="header">
+					<button id="p31r" class="back">Back</button>
+					Magic Itinerary Maker
+				</div>
 				<h1>What is the height of your shortest party member?</h1>
 				
 				<form id="typeq" class="question">
@@ -118,9 +132,13 @@
 			
 			<!-- Activity Display Page -->
 			<div class="app" id="page4">
+				<div class="header">
+					Magic Itinerary Maker
+				</div>
+				
 				<h1>My Itinerary</h1>
 
-				<table id="iresults" border="1px">
+				<table class="app" id="iresults" border="1px">
 					<tbody>
 					<tr class="hideme"></tr>
 					</tbody>
@@ -129,6 +147,11 @@
 			</div>
 			
 			<div id="page5" class="app">
+				<div class="header">
+					<button id="p5r" class="back">Back</button>
+					Magic Itinerary Maker
+				</div>
+				
 				<h1 id="nm">Haunted Mansion</h1>
 				<img src="img/hm.jpeg" width="60%">
 				<div id="adescription">
@@ -138,12 +161,11 @@
 				Description: <span id="des"></span><br>
 				MIM Ranking: <span id="rank"></span>
 				</div>
-				<button id="b3" class="p1">Back</button>
+
 			</div>
 		</div>
 		
         <script type="text/javascript" src="cordova.js"></script>
-		<script type="text/javascript" src="js/magic.js"></script>
         
     </body>
 </html>

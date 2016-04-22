@@ -13,8 +13,10 @@
         <param name="onload" value="true" />
     </feature>
     <allow-intent href="market:*" />
+    <preference name="SetFullscreen" value="true" />
+    <preference name="BackgroundColor" value="#ffffff" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="5000" />
+    <preference name="SplashScreenDelay" value="3000" />
     <preference name="SplashScreenBackgroundColor" value="#336600" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="SplashShowOnlyFirstTime" value="true" />
@@ -28,7 +30,6 @@
     <content src="index.html" />
     <icon src="www/img/logo.png" />
     <splash src="platforms/android/res/splash2.png" />
-    <preference name="SetFullscreen" value="true" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

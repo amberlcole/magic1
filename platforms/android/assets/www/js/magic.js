@@ -3,8 +3,8 @@ var parkArray = [];
 var typeArray = [];
 
 $(document).ready(function (){
+/************Page 1 Javascript************/	
 	
-/************Page 1 Javascript************/		
 	//Custom button actions	
 	$("#cbutton").on("tap", function(){
 		cbit = 1;
@@ -13,7 +13,6 @@ $(document).ready(function (){
 	
     //Random button actions
 	$("#rbutton").on("tap", function(){
-	    //randomItinerary();
 	    navigation(page1, page2);
 	});
 	
@@ -29,7 +28,14 @@ $(document).ready(function (){
 	});
 
 /************Page 2 Javascript************/	
-	$("#q1").on("tap", function(){
+	$("#p2r").on("tap", function(e){
+		cbit = 0;
+		navigation(page2,page1);
+		$("input:checkbox[class=park]").attr("checked", false);	
+		e.preventDefault();
+	});
+	
+	$("#q1").on("tap", function(e){
 		
 		$("input:checkbox[class=park]:checked").each(function(){
 			parkArray.push($(this).val());
@@ -53,11 +59,16 @@ $(document).ready(function (){
 		else {
 		    alert("You didn't select any parks");
 		}
-		
+		e.preventDefault();
 	});
 	
-/************Page 3.1 Javascript************/			
-	$("#q2").on("tap", function(){
+/************Page 3 Javascript************/			
+	$("#p3r").on("tap", function(e){
+		navigation(page3,page2);
+		e.preventDefault();
+	});
+	
+	$("#q2").on("tap", function(e){
 		
         //type id = t,m,d,w,dr,i
 		$("input:checkbox[class=type]:checked").each(function(){
@@ -71,10 +82,16 @@ $(document).ready(function (){
 		}else{
 			navigation(page3,page31);
 		}
+		e.preventDefault();
 	});
 	
-/************Page 3.2 Javascript************/			
-	$("#q3").on("tap", function(){
+/************Page 3.1 Javascript************/			
+	$("#p31r").on("tap", function(e){
+		navigation(page31,page3);
+		e.preventDefault();
+	});
+	
+	$("#q3").on("tap", function(e){
 		var heightReq = $('input[name="height"]:checked').val();
 		console.log(heightReq);
 		
@@ -84,10 +101,20 @@ $(document).ready(function (){
 		}else{
 			alert("Please select a height");
 		}
+		e.preventDefault();
 	});
 
-/************Page 4 Javascript************/			
-	$(document).on("tap", "td", function(){
+/************Page 4 Javascript************/	
+	$("#p4r").on("tap", function(e){
+		if( cbit != 1 ){
+			navigation(page4, page31);
+		}else{
+			navigation(page4,page3);
+		};
+		e.preventDefault();
+	});
+		
+	$(document).on("tap", "td", function(e){
 		var selected = $(this).text();
 		
 		if(selected.search("'")!= -1){
@@ -97,18 +124,20 @@ $(document).ready(function (){
 		var stringToSend = "SELECT * FROM events WHERE Name='" + selected + "'";
 		activityDisplay(stringToSend, function (placeHolder) { } );
 		navigation(page4,page5);
+		e.preventDefault();
 	});
 	
 /************Page 5 Javascript************/			
-	$("#b3").on("tap", function(){
+	$("#p5r").on("tap", function(e){
 		navigation(page5,page4);
+		e.preventDefault();
 	});
 
 });
 
 function navigation(c,n){
 	$( c ).hide();
-	$( n ).fadeIn(1000);
+	$( n ).show();
 };
 
 function typeSelect(){
