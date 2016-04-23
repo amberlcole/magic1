@@ -3,6 +3,19 @@ function navigation(c,n){
 	$( n ).show();
 };
 
+function shuffle(array) {
+    var tmp, current, top = array.length;
+
+    if(top) while(--top) {
+    	current = Math.floor(Math.random() * (top + 1));
+    	tmp = array[current];
+    	array[current] = array[top];
+    	array[top] = tmp;
+    }
+
+    return array;
+};
+
 function typeSelect(){
 	if( cbit != 1 ){
 		randomItinerary(parkArray);
@@ -13,21 +26,21 @@ function typeSelect(){
 };
 
 function parkSelect(park){
+	var parkS = [];
+	
 	if( park.length > 1 ){
-		parkS = "EventsDL,EventsCS";
+	parkS = ["EventsDL", "EventsCA"];
 	}else{
 		if(park[0] == "Disneyland"){
-			parkS = "EventsDL";
+			parkS = ["EventsDL"];
 		}else{
-			parkS = "EventsCA";
+			parkS = ["EventsCA"];
 		}
 	};
 	return parkS;
 };
 
-function customItinerary(park,type, height){
-	parkS = parkSelect(park);
-	
+function customItinerary(park,type,height){
 	if( type.length == 1 ){
 		typeS = "'%" + type[0] + "%' ";
 	}else{
@@ -41,9 +54,14 @@ function customItinerary(park,type, height){
 		typeS = typeS.concat(last);
 		
 	};
-	
+	parkS = parkSelect(park);
+	var union= "";
+	if( park.length > 1 ){
+		union = " UNION ALL SELECT * FROM " + parkS[1] + " WHERE Type LIKE " + typeS + "AND Height <='" + height + "'";
+	}
+
 	console.log(typeS);
-	var queryToSend = "SELECT * FROM " + parkS + " WHERE Type LIKE " + typeS + " AND Height <='" + height + "'";
+	var queryToSend = "SELECT * FROM " + parkS[0] + " WHERE Type LIKE " + typeS + "AND Height <='" + height + "'" + union + " ORDER BY Park, Land";
 	console.log(queryToSend);
 	selectRow(queryToSend, function (placeHolder) { });
 };
@@ -53,13 +71,14 @@ function randomItinerary(park){
 	
 	if( park.length > 1 ){
 		rankS = "Rank < 15 AND Rank > 0";
+		union = " UNION SELECT * FROM " + parkS[1] + " WHERE " + rankS;
 	}else if( park[0] == "Disneyland"){
 		rankS = "Rank < 17 AND Rank > 0";
 	}else{
 		rankS = "Rank < 33 AND Rank > 0";
 	};
 	
-	var queryToSend = "SELECT * FROM " + parkS + " WHERE " + rankS + " ORDER BY RANDOM()";
+	var queryToSend = "SELECT * FROM " + parkS[0] + " WHERE " + rankS + union;
 	console.log(queryToSend);
 	selectRow(queryToSend, function (placeHolder) { });	
 };
@@ -104,7 +123,11 @@ function activityDisplay(query, callBack){
    });
 };
 
-function sendToGui(array){
+function sendToGui(array){	
+	if(cbit != 1){
+		array = shuffle(array);
+	}
+	
 	for(var i=0; i<array.length; i++){
 		var table = document.getElementById ("iresults");
         var row = table.insertRow (1);
