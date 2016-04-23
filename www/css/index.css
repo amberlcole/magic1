@@ -33,6 +33,7 @@ hr{
 
 tr{
 	width:100%;
+	height:50px;
 	color:#003366;
 	background-color:#99ccff;
 	font-size:25px;
@@ -43,11 +44,13 @@ tr{
 
 input[type="checkbox"] {
 	float:left;
+	padding:10px;
 	transform:scale(2, 2);
 }
 
 input[type="radio"] {
-	display:inline;
+	float:left;
+	padding:10px;
 	transform:scale(2, 2);
 }
 
@@ -59,12 +62,13 @@ Div Classes
 .container{
 	width:100%;
 	height:100%;
-	/*position:fixed;*/
+	position:static;
 	background-color:#FFFFFF;
 }
 
 /* Portrait layout (default) */
 .app {
+	position:absolute;
     width:100%;   
 	height:100%;/* text area width */
     text-align:center;
@@ -80,21 +84,25 @@ Div Classes
 	text-align:center;
 }
 
-.hideme, .ui-loader{
-	display:none;
+.header{
+	width:100%;
+	height:10%;
+	margin-bottom:1%;
+	background-color:#003366;
+	color:#FFFFFF;
+	font-size:20px;
+	font-weight:bold;
+	text-align:center;
 }
 
-/* Landscape layout (with min-width) */
-@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
-    .app {
-        background-position:center;
-    }
+.hideme, .ui-loader{
+	display:none;
 }
 
 /****************************************************
 Div Ids
 ****************************************************/
-#page1, #page2, #page3, #page31, #page32, #page4, #page5{
+#page1, #page2, #page3, #page31, #page4, #page5{
 	display:none;
 }
 
@@ -145,17 +153,6 @@ Buttons and Links
 ****************************************************/
 #return{
 	//display:none;
-}
-
-.header{
-	width:100%;
-	height:10%;
-	margin-bottom:1%;
-	background-color:#003366;
-	color:#FFFFFF;
-	font-size:20px;
-	font-weight:bold;
-	text-align:center;
 }
 
 .back{

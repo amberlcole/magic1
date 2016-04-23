@@ -1,130 +1,3 @@
-var cbit = 0;
-var parkArray = [];
-var typeArray = [];
-
-$(document).ready(function (){
-/************Page 1 Javascript************/	
-	//Custom button actions	
-	$("#cbutton").on("tap", function(){
-		cbit = 1;
-		navigation( page1,page2 );
-	});
-	
-    //Random button actions
-	$("#rbutton").on("tap", function(){
-	    navigation(page1, page2);
-	});
-	
-	//Description button action
-	$("#ibutton").on("click",function(){
-		$("#idescription").fadeIn("fast");
-		$("#c2").fadeIn("fast");
-	}); 
-	
-	$("#idescription").on("tap", function(){
-		$("#idescription").fadeOut("slow");
-		$("#c2").fadeOut("slow");
-	});
-
-/************Page 2 Javascript************/	
-	$("#p2r").on("tap", function(e){
-		cbit = 0;
-		navigation(page2,page1);
-		$("input:checkbox[class=park]").attr("checked", false);	
-		e.preventDefault();
-	});
-	
-	$("#q1").on("tap", function(e){
-		
-		$("input:checkbox[class=park]:checked").each(function(){
-			parkArray.push($(this).val());
-		});
-		
-		console.log(parkArray);
-        
-        //Checks which boxes are checked and calls the correct function query
-		if ((document.getElementById('dland').checked) && (document.getElementById('advent').checked)) {
-		    randomItinerary1();
-			typeSelect();
-		}
-		else if (document.getElementById('dland').checked) {
-		    randomItinerary2();
-			typeSelect();
-		}
-		else if (document.getElementById('advent').checked) {
-		    randomItinerary3();
-			typeSelect();
-		}
-		else {
-		    alert("You didn't select any parks");
-		}
-		e.preventDefault();
-	});
-	
-/************Page 3 Javascript************/			
-	$("#p3r").on("tap", function(e){
-		navigation(page3,page2);
-		e.preventDefault();
-	});
-	
-	$("#q2").on("tap", function(e){
-		
-        //type id = t,m,d,w,dr,i
-		$("input:checkbox[class=type]:checked").each(function(){
-			typeArray.push($(this).val());
-		});
-		
-		console.log(typeArray);
-		
-		if( typeArray.length == 0 ){
-			alert("You didn't select any type");
-		}else{
-			navigation(page3,page31);
-		}
-		e.preventDefault();
-	});
-	
-/************Page 3.1 Javascript************/			
-	$("#p31r").on("tap", function(e){
-		navigation(page31,page3);
-		e.preventDefault();
-	});
-	
-	$("#q3").on("tap", function(e){
-		var heightReq = $('input[name="height"]:checked').val();
-		console.log(heightReq);
-		
-		if(heightReq!=null){
-			customItinerary(parkArray,typeArray,heightReq);
-			navigation(page31,page4);
-		}else{
-			alert("Please select a height");
-		}
-		e.preventDefault();
-	});
-
-/************Page 4 Javascript************/		
-	$(document).on("tap", "td", function(e){
-		var selected = $(this).text();
-		
-		if(selected.search("'")!= -1){
-			selected = selected.replace("'","''");
-		}
-		
-		var stringToSend = "SELECT * FROM events WHERE Name='" + selected + "'";
-		activityDisplay(stringToSend, function (placeHolder) { } );
-		navigation(page4,page5);
-		e.preventDefault();
-	});
-	
-/************Page 5 Javascript************/			
-	$("#p5r").on("tap", function(e){
-		navigation(page5,page4);
-		e.preventDefault();
-	});
-
-});
-
 function navigation(c,n){
 	$( c ).hide();
 	$( n ).show();
@@ -132,18 +5,28 @@ function navigation(c,n){
 
 function typeSelect(){
 	if( cbit != 1 ){
+		randomItinerary(parkArray);
 		navigation(page2, page4);
 	}else{
 		navigation(page2,page3);
 	};
 };
 
-function customItinerary(park, type, height){
+function parkSelect(park){
 	if( park.length > 1 ){
-		parkS = "'" + park[0] + "'" + " OR Park='" + park[1] + "'";
+		parkS = "EventsDL,EventsCS";
 	}else{
-		parkS ="'" + park[0] + "'";
+		if(park[0] == "Disneyland"){
+			parkS = "EventsDL";
+		}else{
+			parkS = "EventsCA";
+		}
 	};
+	return parkS;
+};
+
+function customItinerary(park,type, height){
+	parkS = parkSelect(park);
 	
 	if( type.length == 1 ){
 		typeS = "'%" + type[0] + "%' ";
@@ -160,37 +43,35 @@ function customItinerary(park, type, height){
 	};
 	
 	console.log(typeS);
-	var queryToSend = "SELECT * FROM events WHERE Park=" + parkS + " AND Type LIKE " + typeS + " AND Height <='" + height + "'";
+	var queryToSend = "SELECT * FROM " + parkS + " WHERE Type LIKE " + typeS + " AND Height <='" + height + "'";
 	console.log(queryToSend);
 	selectRow(queryToSend, function (placeHolder) { });
 };
 
-function randomItinerary1(){
-    var db = window.sqlitePlugin.openDatabase({ name: 'events.db', createFromLocation: 1, iosDatabaseLocation: 'default' });
-    selectRow("SELECT * FROM events WHERE ((Rank < 7  AND Rank > 0) AND Park='Disneyland') OR ((Rank < 15 AND Rank > 0) AND Park='California Adventure') ORDER BY RANDOM()",
-        function (placeHolder) { });
-};
-
-function randomItinerary2(){
-	selectRow("SELECT * FROM events WHERE ((Rank < 17 AND Rank > 0) AND Park='Disneyland') ORDER BY RANDOM()",
-         function (placeHolder) { });
-};
-
-function randomItinerary3(){
-    selectRow("SELECT * FROM events WHERE ((Rank < 33 AND Rank > 0) AND Park='California Adventure') ORDER BY RANDOM()",
-         function (placeHolder) { });
+function randomItinerary(park){
+	parkS = parkSelect(park);
+	
+	if( park.length > 1 ){
+		rankS = "Rank < 15 AND Rank > 0";
+	}else if( park[0] == "Disneyland"){
+		rankS = "Rank < 17 AND Rank > 0";
+	}else{
+		rankS = "Rank < 33 AND Rank > 0";
+	};
+	
+	var queryToSend = "SELECT * FROM " + parkS + " WHERE " + rankS + " ORDER BY RANDOM()";
+	console.log(queryToSend);
+	selectRow(queryToSend, function (placeHolder) { });	
 };
 
 /** Select Rows from Table **/ 
 function selectRow(query, callBack){
 	console.log(query);
-	var db = window.sqlitePlugin.openDatabase({name: 'events.db', 
-											  createFromLocation: 1, 
-											  iosDatabaseLocation: 'default'});
+
 	var result = [];
 	db.transaction(function (tx) {
 		tx.executeSql(query, [], function(tx, rs){
-			for(var i=0; i<10/*rs.rows.length*/; i++){
+			for(var i=0; i<10; i++){
 				var row = rs.rows.item(i);
 				result[i] = row['Name'].toString();
 			}
@@ -203,17 +84,15 @@ function selectRow(query, callBack){
 
 function activityDisplay(query, callBack){
 	console.log(query);
-	var db = window.sqlitePlugin.openDatabase({name: 'events.db', 
-											  createFromLocation: 1, 
-											  iosDatabaseLocation: 'default'});
 	var result = [];
 	db.transaction(function (tx) {
 		tx.executeSql(query, [], function(tx, rs){
 			for(var i=0; i<rs.rows.length; i++){
+				console.log(rs.rows.length);
 				var row = rs.rows.item(i);
 				result[0] = row['Name'].toString();
 				result[1] = row['Park'].toString();
-				result[2] = row['Type'].toString();
+				result[2] = row['Description'].toString();
 				result[3] = row['Height'].toString();
 				result[4] = row['FastPass'].toString();
 				result[5] = row['Rank'].toString();
@@ -246,8 +125,7 @@ function pageFive(array){
 	}
 	$("#hr").html(array[3]);
 	$("#rank").html(array[5]);
-	
-}
+};
 
 function errorCB(){
 	console.log("Query not successful");
