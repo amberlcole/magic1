@@ -57,6 +57,10 @@ $(document).ready(function (){
 			typeArray.push($(this).val());
 		});
 		
+		$("input:checkbox[class=type]:not(:checked)").each(function(){
+			notTypeArray.push($(this).val());
+		});
+		console.log(notTypeArray);
 		if( typeArray.length == 0 ){
 			alert("Please select at least one type.");
 		}else{
@@ -75,7 +79,7 @@ $(document).ready(function (){
 		var heightReq = $('input[name="height"]:checked').val();
 		
 		if(heightReq!=null){
-			customItinerary(parkArray,typeArray,heightReq);
+			customItinerary(parkArray,typeArray,notTypeArray,heightReq);
 			navigation(page31,page4);
 		}else{
 			alert("Please select a height");
@@ -92,21 +96,25 @@ $(document).ready(function (){
 		}
 		
 		parkS = parkSelect(parkArray);
+		var union= "";
+		if( parkS.length > 1 ){
+			union = " UNION SELECT * FROM " + parkS[1] + " WHERE Name='" + selected + "'";
+		}
 		
-		var stringToSend = "SELECT * FROM " + parkS + " WHERE Name='" + selected + "'";
+		var stringToSend = "SELECT * FROM " + parkS[0] + " WHERE Name='" + selected + "'" + union;
 		activityDisplay(stringToSend, function (placeHolder) { } );
 		navigation(page4,page5);
-		e.preventDefault();
+		//e.preventDefault();
 	});
 	
-	$(document).on("swiperight", "td", function(e){
+	$(document).on("swiperight", "tr", function(e){
 		var selected = $(this).text();
 		
 		if(selected.search("'")!= -1){
 			selected = selected.replace("'","''");
 		}
 		
-        $(this).html("Replace Me!");
+        $(this).hide();
 	});
 	
 /************Page 5 Javascript************/			

@@ -17,6 +17,7 @@ var app = {
 		window.cbit = 0;
 		window.parkArray = [];
 		window.typeArray = [];
+		window.notTypeArray = [];
 		window.db = window.sqlitePlugin.openDatabase({name: 'events.db', 
 												   createFromLocation: 1, 
 												   iosDatabaseLocation: 'default'});

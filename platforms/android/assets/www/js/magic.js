@@ -40,9 +40,9 @@ function parkSelect(park){
 	return parkS;
 };
 
-function customItinerary(park,type,height){
+function customItinerary(park,type,notType,height){
 	if( type.length == 1 ){
-		typeS = "'%" + type[0] + "%' ";
+		typeS = "'%" + type[0] + "%'";
 	}else{
 		typeS = "'%" + type[0] + "%' OR Type LIKE";
 		
@@ -53,15 +53,37 @@ function customItinerary(park,type,height){
 		last = " '%" + type[(type.length - 1)] + "%'";
 		typeS = typeS.concat(last);
 		
+	}
+	console.log(notType.length);
+	if( notType.length == 0 ){
+		nTypeS = "";
+	}else if(notType.length == 1){
+		nTypeS = " AND Type NOT LIKE '%" + notType[0] + "%'";
+	}else{
+		nTypeS = " AND Type NOT LIKE '%" + notType[0] + "%' AND Type NOT LIKE";
+		
+		for(var i=1; i<(notType.length - 1); i++){
+			temp = " '%" + notType[i] + "%' AND Type NOT LIKE";
+			nTypeS = nTypeS.concat(temp);
+		}
+		last = " '%" + notType[(notType.length - 1)] + "%'";
+		nTypeS = nTypeS.concat(last);
+		
 	};
+	
+	console.log(nTypeS);
 	parkS = parkSelect(park);
-	var union= "";
+	union = "";
+	
 	if( park.length > 1 ){
-		union = " UNION ALL SELECT * FROM " + parkS[1] + " WHERE Type LIKE " + typeS + "AND Height <='" + height + "'";
+		union = " UNION SELECT * FROM " 
+				+ parkS[1] + " WHERE Type LIKE " 
+				+ typeS + nTypeS + " AND Height <='" 
+				+ height + "'";
 	}
 
 	console.log(typeS);
-	var queryToSend = "SELECT * FROM " + parkS[0] + " WHERE Type LIKE " + typeS + "AND Height <='" + height + "'" + union + " ORDER BY Park, Land";
+	var queryToSend = "SELECT * FROM " + parkS[0] + " WHERE Type LIKE " + typeS + nTypeS + " AND Height <='" + height + "'" + union;
 	console.log(queryToSend);
 	selectRow(queryToSend, function (placeHolder) { });
 };
@@ -79,18 +101,15 @@ function randomItinerary(park){
 	};
 	
 	var queryToSend = "SELECT * FROM " + parkS[0] + " WHERE " + rankS + union;
-	console.log(queryToSend);
 	selectRow(queryToSend, function (placeHolder) { });	
 };
 
 /** Select Rows from Table **/ 
 function selectRow(query, callBack){
-	console.log(query);
-
 	var result = [];
 	db.transaction(function (tx) {
 		tx.executeSql(query, [], function(tx, rs){
-			for(var i=0; i<10; i++){
+			for(var i=0; i<rs.rows.length; i++){
 				var row = rs.rows.item(i);
 				result[i] = row['Name'].toString();
 			}
@@ -126,16 +145,27 @@ function activityDisplay(query, callBack){
 function sendToGui(array){	
 	if(cbit != 1){
 		array = shuffle(array);
-	}
+	};
 	
-	for(var i=0; i<array.length; i++){
-		var table = document.getElementById ("iresults");
-        var row = table.insertRow (1);
-		row.className = "sResult";
-        var cell = row.insertCell (0);
-        cell.innerHTML = array[i];
-	}
+	if( array.length > 10 ){
+		for(var i=0; i<10; i++){
+			var table = document.getElementById ("iresults");
+			var row = table.insertRow (1);
+			row.className = "sResult";
+			var cell = row.insertCell (0);
+			cell.innerHTML = array[i];
+		}
+	}else{
+		for(var i=0; i<array.length; i++){
+			var table = document.getElementById ("iresults");
+			var row = table.insertRow (1);
+			row.className = "sResult";
+			var cell = row.insertCell (0);
+			cell.innerHTML = array[i];
+		}
+	};
 };
+
 
 function pageFive(array){
 	$("#nm").html(array[0]);
