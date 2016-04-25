@@ -15,9 +15,11 @@ var app = {
     onDeviceReady: function() {
 		$("#page1").show();
 		window.cbit = 0;
+		window.sbit = 0;
 		window.parkArray = [];
 		window.typeArray = [];
 		window.notTypeArray = [];
+		window.itineraryArray = [];
 		window.db = window.sqlitePlugin.openDatabase({name: 'events.db', 
 												   createFromLocation: 1, 
 												   iosDatabaseLocation: 'default'});

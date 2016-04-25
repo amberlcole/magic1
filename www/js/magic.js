@@ -1,6 +1,16 @@
 function navigation(c,n){
-	$( c ).hide();
-	$( n ).show();
+	$( c ).fadeOut(300);
+	setTimeout(function(){
+		$( n ).fadeIn(300);
+	}, 300);
+};
+
+String.prototype.replaceAll = function(search, replace){
+    if (replace === undefined) {
+        return this.toString();
+    }
+
+    return this.replace(new RegExp('[' + search + ']', 'g'), replace);
 };
 
 function shuffle(array) {
@@ -14,6 +24,45 @@ function shuffle(array) {
     }
 
     return array;
+};
+
+function sortCustom(array){
+	sbit = 1;
+	array = shuffle(array);
+	
+	if(array.length > 10){
+		array = array.slice(0, 10);
+	}
+
+	for(var i=0; i<array.length; i++){
+		array[i] = array[i].replaceAll("'","''")
+	}
+
+	if( array.length == 1 ){
+		nameS = "'" + array[0] + "'";
+	}else{
+		nameS = "'" + array[0] + "' OR Name=";
+		console.log("here?")
+		for(var i=1; i<(array.length - 1); i++){
+			temp = "'" + array[i] + "' OR Name=";
+			nameS = nameS.concat(temp);
+		}
+		last = "'" + array[(array.length - 1)] + "'";
+		nameS = nameS.concat(last);
+	}
+	
+	parkS = parkSelect(parkArray);
+	union = "";
+	if( parkArray.length > 1 ){
+		union = " UNION SELECT * FROM " 
+				+ parkS[1] + " WHERE Name=" + nameS;
+	}
+	var sortQuery = "SELECT * FROM " + parkS[0] + " WHERE Name=" 
+					+ nameS + union + " ORDER BY Park, Land, Rank";
+	
+	console.log(sortQuery);
+	
+	selectRow(sortQuery, function (placeHolder) { });
 };
 
 function typeSelect(){
@@ -83,14 +132,18 @@ function customItinerary(park,type,notType,height){
 	}
 
 	console.log(typeS);
-	var queryToSend = "SELECT * FROM " + parkS[0] + " WHERE Type LIKE " + typeS + nTypeS + " AND Height <='" + height + "'" + union;
+	var queryToSend = "SELECT * FROM " 
+					+ parkS[0] + " WHERE Type LIKE " 
+					+ typeS + nTypeS + " AND Height <='" 
+					+ height + "'" + union;
 	console.log(queryToSend);
 	selectRow(queryToSend, function (placeHolder) { });
 };
 
 function randomItinerary(park){
+	sbit = 1;
 	parkS = parkSelect(park);
-	
+	union = "";
 	if( park.length > 1 ){
 		rankS = "Rank < 15 AND Rank > 0";
 		union = " UNION SELECT * FROM " + parkS[1] + " WHERE " + rankS;
@@ -100,7 +153,7 @@ function randomItinerary(park){
 		rankS = "Rank < 33 AND Rank > 0";
 	};
 	
-	var queryToSend = "SELECT * FROM " + parkS[0] + " WHERE " + rankS + union;
+	var queryToSend = "SELECT * FROM " + parkS[0] + " WHERE " + rankS + union + " ORDER BY Park";
 	selectRow(queryToSend, function (placeHolder) { });	
 };
 
@@ -142,30 +195,40 @@ function activityDisplay(query, callBack){
    });
 };
 
-function sendToGui(array){	
-	if(cbit != 1){
-		array = shuffle(array);
-	};
-	
-	if( array.length > 10 ){
-		for(var i=0; i<10; i++){
-			var table = document.getElementById ("iresults");
-			var row = table.insertRow (1);
-			row.className = "sResult";
-			var cell = row.insertCell (0);
-			cell.innerHTML = array[i];
-		}
-	}else{
-		for(var i=0; i<array.length; i++){
-			var table = document.getElementById ("iresults");
-			var row = table.insertRow (1);
-			row.className = "sResult";
-			var cell = row.insertCell (0);
-			cell.innerHTML = array[i];
-		}
-	};
+function sortReturn(array){
+	itineraryArray = array;
+	console.log(itineraryArray);
 };
 
+function sendToGui(array){	
+	if(sbit != 1){
+		if(cbit != 1){
+			array = shuffle(array);
+		}else{
+			sortCustom(array);
+		}
+	}else{
+	
+		if( array.length > 10 ){
+			for(var i=0; i<10; i++){
+				var table = document.getElementById ("iresults");
+				var row = table.insertRow (1);
+				row.className = "sResult";
+				var cell = row.insertCell (0);
+				cell.innerHTML = array[i];
+			}
+		}else{
+			for(var i=0; i<array.length; i++){
+				var table = document.getElementById ("iresults");
+				var row = table.insertRow (1);
+				row.className = "sResult";
+				var cell = row.insertCell (0);
+				cell.innerHTML = array[i];
+			}
+			$("sItinerary").html("Your itinerary came out a bit short!<br> Here are some suggestions from us!")
+		}
+	}
+};
 
 function pageFive(array){
 	$("#nm").html(array[0]);
@@ -178,6 +241,16 @@ function pageFive(array){
 	}
 	$("#hr").html(array[3]);
 	$("#rank").html(array[5]);
+};
+
+function clearGlobal(){
+	cbit = 0;
+	sbit = 0;
+	parkArray = [];
+	typeArray = [];
+	notTypeArray = [];
+	itineraryArray = [];
+	$("#iresults").html('<tbody><tr class="hideme"></tr></tbody>')
 };
 
 function errorCB(){

@@ -49,6 +49,7 @@ $(document).ready(function (){
 /************Page 3 Javascript************/			
 	$("#p3r").on("tap", function(e){
 		navigation(page3,page2);
+		$("input:checkbox[class=type]").attr("checked", false);	
 		e.preventDefault();
 	});
 	
@@ -72,6 +73,7 @@ $(document).ready(function (){
 /************Page 3.1 Javascript************/			
 	$("#p31r").on("tap", function(e){
 		navigation(page31,page3);
+		$('input:[name="height"]').attr("checked", false);	
 		e.preventDefault();
 	});
 	
@@ -88,6 +90,14 @@ $(document).ready(function (){
 	});
 
 /************Page 4 Javascript************/		
+	$("#p1r").on("tap", function(e){
+		navigation(page4,page1);
+		$('input:checkbox').attr("checked", false);	
+		//$('input:[name="height"]').attr("checked", false);
+		clearGlobal();
+		e.preventDefault();
+	});
+	
 	$(document).on("tap", "td", function(e){
 		var selected = $(this).text();
 		
@@ -107,7 +117,7 @@ $(document).ready(function (){
 		//e.preventDefault();
 	});
 	
-	$(document).on("swipe", "tr", function(e){
+	$(document).on("swiperight", "tr", function(e){
 		var selected = $(this).text();
 		
 		if(selected.search("'")!= -1){

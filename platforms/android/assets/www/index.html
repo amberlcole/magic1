@@ -41,7 +41,7 @@
 				
 				<h1>How would you like your magic made?</h1>
 				<button id="cbutton" class="p1">Custom Itinerary</button>
-				<button id="rbutton" class="p1">Random Itinerary</button>
+				<button href="#page2" id="rbutton" class="p1">Random Itinerary</button>
 			
 				<button id="ibutton" class="d1">What is the difference?</button>
 			</div>
@@ -129,12 +129,20 @@
 			<!-- Activity Display Page -->
 			<div class="app" id="page4">
 				<div class="header">
-					Magic Itinerary Maker
+					<button id="p1r" class="back">New</button>
+					My Itinerary
+					<button id="save" class="back">Save</button>
 				</div>
-				
-				<h1>My Itinerary</h1>
 
 				<table class="app" id="iresults" border="1px">
+					<tbody>
+					<tr class="hideme"></tr>
+					</tbody>
+				</table>
+				
+				<h1 id="sItinerary"></h1>
+				
+				<table class="app" id="eresults" border="1px">
 					<tbody>
 					<tr class="hideme"></tr>
 					</tbody>
