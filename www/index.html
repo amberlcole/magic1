@@ -40,10 +40,14 @@
 				</div>
 				
 				<h1>How would you like your magic made?</h1>
-				<button id="cbutton" class="p1">Custom Itinerary</button>
-				<button href="#page2" id="rbutton" class="p1">Random Itinerary</button>
-			
-				<button id="ibutton" class="d1">What is the difference?</button>
+				<img src="img/MickeyWizard.gif" alt="MickeyWizard.gif" style="width:55%;height:45%;">
+				
+				<div class="buttonsDiv">
+                    <input id="cbutton" class="buttons" type="image" src="img/customButton.gif">
+                    <input id="rbutton" class="buttons" type="image" src="img/randomButton.gif">
+
+                    <button id="ibutton" class="d1">What is the difference?</button>
+                </div>
 			</div>
 
 			<!-- Question Page 1-->
@@ -55,15 +59,19 @@
 				
 				<h1>Which parks will you be visiting?</h1>
 				
+
 				<form id="parkq" class="question">
-					<span><input id="dland" type="checkbox" class="park" value="Disneyland">
-					Disneyland</span>
-					
-					<input id="advent" type="checkbox" class="park" value="California Adventure">
-					California Adventure
-					
-				</form>
-				<button id="q1" class="p1">Next</button>
+                    <div class="checkBoxes">
+                        <input id="dland" type="checkbox" class="checkpark" value="Disneyland">
+                        <label for="dland"><img src="img/dlandLogo.gif" alt="Disneyland" /></label>
+
+                        <input id="advent" type="checkbox" class="checkpark" value="California Adventure">
+                        <label for="advent"><img src="img/adventLogo.gif" alt="California Adventure" /></label>
+                    </div>
+                </form>
+                <div class="buttonsDiv">
+                    <input id="q1" class="buttons" type="image" src="img/nextButton.gif">
+                </div>
 			</div>
 			
 			<!-- Custom: Question Page 2 -->
@@ -76,20 +84,26 @@
 				<h1>What type of rides would you like included in your itinerary?</h1>
 				
 				<form id="typeq" class="question">
-					<input id="t" type="checkbox" class="type" value="Thrill">
-					Thrill<br>
-					
-					<input id="m" type="checkbox" class="type" value="Mild">
-					Mild<br>
-					
-					<input id="d" type="checkbox" class="type" value="Dark">
-					Dark<br>
-					
-					<input id="w" type="checkbox" class="type" value="Water">
-					Water<br>
+                    <div class="checkBoxes">
+                        <img src="img/wordBubbleWater.png" id ="daisyBubble" alt="Dont Forget A Towel" />
+                        <img src="img/diasySwimSuit.gif" id="daisy" alt="Diasy" />
 
+                        <input id="t" type="checkbox" class="type" value="Thrill">
+                        <label for="t">Thrill</label>
+
+                        <input id="m" type="checkbox" class="type" value="Mild">
+                        <label for="m">Mild</label>
+
+                        <input id="d" type="checkbox" class="type" value="Dark">
+                        <label for="d">Dark</label>
+
+                        <input type="checkbox" id="w" class="type" onclick="triggerVisibility()" value="Water" >
+                        <label for="w">Water</label>
+                    </div>
 				</form>
-				<button id="q2" class="p1">Next</button>
+                <div class="buttonsDiv">
+                    <input id="q2" class="buttons" type="image" src="img/nextButton.gif">
+                </div>
 			</div>
 			
 			<!-- Custom: Question Page 3 -->
@@ -100,30 +114,33 @@
 				</div>
 				<h1>What is the height of your shortest party member?</h1>
 				
-				<form id="typeq" class="question">
-					<input id="thirtytwo" type="radio" name="height" value="32">
-					32 inches<br>
+				<form id="heightq" class="question">
+					<div class="checkBoxes">
+						<input id="thirtytwo" type="radio" name="height" value="32">
+						<label for="thirtytwo">32 inches</label>
 					
-					<input id="thirtyfive" type="radio" name="height" value="35">
-					35 inches<br>
+						<input id="thirtyfive" type="radio" name="height" value="35">
+						<label for="thirtyfive">35 inches</label>
 					
-					<input id="forty" type="radio" name="height" value="40">
-					40 inches<br>
+						<input id="forty" type="radio" name="height" value="40">
+						<label for="forty">40 inches</label>
 					
-					<input id="fortytwo" type="radio" name="height" value="42">
-					42 inches<br>
+						<input id="fortytwo" type="radio" name="height" value="42">
+						<label for="fortytwo">42 inches</label>
 					
-					<input id="fortysix" type="radio" name="height" value="46">
-					46 inches<br>
+						<input id="fortysix" type="radio" name="height" value="46">
+						<label for="fortysix">46 inches</label>
 
-					<input id="fortyeight" type="radio" name="height" value="48">
-					48 inches<br>
+						<input id="fortyeight" type="radio" name="height" value="48">
+						<label for="fortyeight">48 inches</label>
 					
-					<input id="n" type="radio" name="height" value="100">
-					Everyone is over 48 inches
-					
+						<input id="n" type="radio" name="height" value="none">
+						<label for="fortytwo">No Height Restrictions</label>
+					</div>
 				</form>
-				<button id="q3" class="p1">Next</button>
+                <div class="buttonsDiv">
+                    <input id="q3" class="buttons" type="image" src="img/nextButton.gif">
+                </div>
 			</div>
 			
 			<!-- Activity Display Page -->
@@ -134,7 +151,7 @@
 					<button id="save" class="back">Save</button>
 				</div>
 
-				<table class="app" id="iresults" border="1px">
+				<table class="app" id="iresults" border="0px">
 					<tbody>
 					<tr class="hideme"></tr>
 					</tbody>

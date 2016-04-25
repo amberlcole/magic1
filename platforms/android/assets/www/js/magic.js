@@ -5,6 +5,14 @@ function navigation(c,n){
 	}, 300);
 };
 
+function triggerVisibility() {
+	if (document.getElementById("w").checked == true) {
+	    document.getElementById("daisyBubble").style.visibility = "visible";
+	}else{
+	    document.getElementById("daisyBubble").style.visibility = "hidden";
+	}
+};
+
 String.prototype.replaceAll = function(search, replace){
     if (replace === undefined) {
         return this.toString();
@@ -209,24 +217,25 @@ function sendToGui(array){
 		}
 	}else{
 	
-	if( array.length > 10 ){
-		for(var i=0; i<10; i++){
-			var table = document.getElementById ("iresults");
-			var row = table.insertRow (1);
-			row.className = "sResult";
-			var cell = row.insertCell (0);
-			cell.innerHTML = array[i];
+		if( array.length > 10 ){
+			for(var i=0; i<10; i++){
+				var table = document.getElementById ("iresults");
+				var row = table.insertRow (1);
+				row.className = "sResult";
+				var cell = row.insertCell (0);
+				cell.innerHTML = array[i];
+			}
+		}else{
+			for(var i=0; i<array.length; i++){
+				var table = document.getElementById ("iresults");
+				var row = table.insertRow (1);
+				row.className = "sResult";
+				var cell = row.insertCell (0);
+				cell.innerHTML = array[i];
+			}
+			$("sItinerary").html("Your itinerary came out a bit short!<br> Here are some suggestions from us!")
 		}
-	}else{
-		for(var i=0; i<array.length; i++){
-			var table = document.getElementById ("iresults");
-			var row = table.insertRow (1);
-			row.className = "sResult";
-			var cell = row.insertCell (0);
-			cell.innerHTML = array[i];
-		}
-		$("sItinerary").html("Your itinerary came out a bit short!<br> Here are some suggestions from us!")
-	};}
+	}
 };
 
 function pageFive(array){
@@ -249,7 +258,8 @@ function clearGlobal(){
 	typeArray = [];
 	notTypeArray = [];
 	itineraryArray = [];
-	$("#iresults").html('<tbody><tr class="hideme"></tr></tbody>')
+	document.getElementById("daisyBubble").style.visibility = "hidden";
+	$("#iresults").html('<tbody><tr class="hideme"></tr></tbody>');
 };
 
 function errorCB(){

@@ -3,6 +3,12 @@ light blue - #99ccff
 dark blue - #003366
 
 */ 
+@font-face {
+    font-family: "disney";
+    src: url("../fonts/waltograph42.ttf") format("truetype"); 
+    font-weight: normal;
+    font-style: normal;
+}	
 
 body {
     background-color:white;
@@ -17,13 +23,14 @@ body {
 
 h1 {
 	color:#000000;
-    font-size:30px;
-    font-weight:bold;
+    font-size:40px;
+    font-family:"disney";
+	text-transform:lowercase;
     margin:0px;
     overflow:visible;
     padding:0px;
     text-align:center;
-	line-height:45px;
+	line-height:40px;
 }
 
 hr{
@@ -43,14 +50,32 @@ tr{
 }
 
 input[type="checkbox"] {
+    width: 20px;
+    position: relative;
+    left: -265px; 
+    vertical-align: middle; 
+    /* Double-sized Checkboxes */
+    transform: scale(2,2);	
+	
+	/* OLD
 	float:left;
 	padding:10px;
-	transform:scale(2, 2);
+	transform:scale(2, 2);*/
+}
+
+/* NEW STUFF*/
+label {  
+    width: 250px;      
+    position: relative;
+    left: 30px;
+    display: inline-block;    
+    vertical-align: middle; 
+    padding: 10px;
 }
 
 input[type="radio"] {
 	float:left;
-	padding:10px;
+	margin-right: 0.8em;
 	transform:scale(2, 2);
 }
 
@@ -89,14 +114,20 @@ Div Classes
 	height:10%;
 	margin-bottom:1%;
 	background-color:#003366;
+	font-family:"disney";
 	color:#FFFFFF;
-	font-size:20px;
+	font-size:30px;
 	font-weight:bold;
 	text-align:center;
 }
 
 .hideme, .ui-loader{
 	display:none;
+}
+
+/* NEW*/
+.checkBoxes{
+    margin-left: 10px;
 }
 
 /****************************************************
@@ -148,11 +179,21 @@ Div Ids
 	
 }
 
+/*NEW*/
+.buttonsDiv {
+	border: 0px;
+    vertical-align: middle;
+}
+
 /****************************************************
 Buttons and Links
 ****************************************************/
 #return{
-	//display:none;
+	display:none;
+}
+
+#save{
+	float:right;
 }
 
 .back{
@@ -189,4 +230,35 @@ Buttons and Links
 	text-transform:uppercase;
 	text-align:left;
 	white-space:nowrap;
+}
+/*NEW*/
+.buttons {
+	border: 0px;
+    align: middle;
+    vertical-align:bottom;
+    margin-bottom: 3%;
+    width:60%;
+	height:60%;
+}
+
+/***************************************
+Images  NEW
+***************************************/
+
+#daisy {
+    border: 0px;
+    float: right;
+    position: relative;
+    left: 10px;  
+    vertical-align: middle;
+}
+
+#daisyBubble {
+    border: 0px;
+    float: right;
+    position: relative;
+    right: 47px;
+    bottom: 3;  
+    vertical-align: middle;
+    visibility: hidden;
 }

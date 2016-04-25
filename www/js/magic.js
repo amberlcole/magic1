@@ -5,6 +5,14 @@ function navigation(c,n){
 	}, 300);
 };
 
+function triggerVisibility() {
+	if (document.getElementById("w").checked == true) {
+	    document.getElementById("daisyBubble").style.visibility = "visible";
+	}else{
+	    document.getElementById("daisyBubble").style.visibility = "hidden";
+	}
+};
+
 String.prototype.replaceAll = function(search, replace){
     if (replace === undefined) {
         return this.toString();
@@ -250,7 +258,8 @@ function clearGlobal(){
 	typeArray = [];
 	notTypeArray = [];
 	itineraryArray = [];
-	$("#iresults").html('<tbody><tr class="hideme"></tr></tbody>')
+	document.getElementById("daisyBubble").style.visibility = "hidden";
+	$("#iresults").html('<tbody><tr class="hideme"></tr></tbody>');
 };
 
 function errorCB(){

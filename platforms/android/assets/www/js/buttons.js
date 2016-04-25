@@ -29,12 +29,12 @@ $(document).ready(function (){
 		cbit = 0;
 		parkArray = [];
 		navigation(page2,page1);
-		$("input:checkbox[class=park]").attr("checked", false);	
+		$("input:checkbox[class=checkpark]").attr("checked", false);	
 		e.preventDefault();
 	});
 	
 	$("#q1").on("tap", function(e){
-		$("input:checkbox[class=park]:checked").each(function(){
+		$("input:checkbox[class=checkpark]:checked").each(function(){
 			parkArray.push($(this).val());
 		});
 		
@@ -46,12 +46,17 @@ $(document).ready(function (){
 		e.preventDefault();
 	});
 	
-/************Page 3 Javascript************/			
+/************Page 3 Javascript************/	
 	$("#p3r").on("tap", function(e){
 		navigation(page3,page2);
 		$("input:checkbox[class=type]").attr("checked", false);	
 		e.preventDefault();
 	});
+	
+	$("w").on("tap", function(e){
+		triggerVisibility();
+		e.preventDefault();
+	});	
 	
 	$("#q2").on("tap", function(e){
 		$("input:checkbox[class=type]:checked").each(function(){
@@ -93,7 +98,7 @@ $(document).ready(function (){
 	$("#p1r").on("tap", function(e){
 		navigation(page4,page1);
 		$('input:checkbox').attr("checked", false);	
-		//$('input:[name="height"]').attr("checked", false);
+		//$('input:[name=height]').attr("checked", false);
 		clearGlobal();
 		e.preventDefault();
 	});
@@ -128,6 +133,7 @@ $(document).ready(function (){
 	});
 	
 /************Page 5 Javascript************/			
+	//b3?
 	$("#p5r").on("tap", function(e){
 		navigation(page5,page4);
 		e.preventDefault();
