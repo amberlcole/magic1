@@ -20,6 +20,9 @@ var app = {
 		window.typeArray = [];
 		window.notTypeArray = [];
 		window.itineraryArray = [];
+		window.heightReq = "";
+		window.lastQuery = "";
+		window.replace = "--Swipe Again--";
 		window.db = window.sqlitePlugin.openDatabase({name: 'events.db', 
 												   createFromLocation: 1, 
 												   iosDatabaseLocation: 'default'});

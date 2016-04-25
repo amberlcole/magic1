@@ -83,13 +83,13 @@ $(document).ready(function (){
 	});
 	
 	$("#q3").on("tap", function(e){
-		var heightReq = $('input[name="height"]:checked').val();
+		heightReq = $('input[name="height"]:checked').val();
 		
 		if(heightReq!=null){
 			customItinerary(parkArray,typeArray,notTypeArray,heightReq);
 			navigation(page31,page4);
 		}else{
-			alert("Please select a height");
+			alert("Please select a height requirement!");
 		}
 		e.preventDefault();
 	});
@@ -98,38 +98,42 @@ $(document).ready(function (){
 	$("#p1r").on("tap", function(e){
 		navigation(page4,page1);
 		$('input:checkbox').attr("checked", false);	
-		//$('input:[name=height]').attr("checked", false);
+		$('input:radio').attr("checked", false);
 		clearGlobal();
 		e.preventDefault();
 	});
 	
 	$(document).on("tap", "td", function(e){
+		
 		var selected = $(this).text();
+		if( selected == "--Swipe Again--"){
+			console.log("please swipe nerd.");
+		}else{
+			selected = selected.replaceAll("'","''");
 		
-		if(selected.search("'")!= -1){
-			selected = selected.replace("'","''");
+			parkS = parkSelect(parkArray);
+			var union= "";
+			if( parkS.length > 1 ){
+				union = " UNION SELECT * FROM " + parkS[1] 
+						+ " WHERE Name='" + selected + "'";
+			}
+		
+			var stringToSend = "SELECT * FROM " + parkS[0] 
+							+ " WHERE Name='" + selected 
+							+ "'" + union;
+			activityDisplay(stringToSend, function (placeHolder) { } );
+			navigation(page4,page5);
 		}
-		
-		parkS = parkSelect(parkArray);
-		var union= "";
-		if( parkS.length > 1 ){
-			union = " UNION SELECT * FROM " + parkS[1] + " WHERE Name='" + selected + "'";
-		}
-		
-		var stringToSend = "SELECT * FROM " + parkS[0] + " WHERE Name='" + selected + "'" + union;
-		activityDisplay(stringToSend, function (placeHolder) { } );
-		navigation(page4,page5);
-		//e.preventDefault();
 	});
 	
 	$(document).on("swiperight", "tr", function(e){
-		var selected = $(this).text();
+  		var selected = $(this).text();
+		selected = selected.replaceAll("'","''");
+		replaceQuery(selected,heightReq);
 		
-		if(selected.search("'")!= -1){
-			selected = selected.replace("'","''");
-		}
-		
-        $(this).hide();
+		$(this).hide();
+		$(this).html("<td>" + replace + "</td>");
+		$(this).fadeIn(1000);
 	});
 	
 /************Page 5 Javascript************/			

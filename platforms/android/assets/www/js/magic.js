@@ -1,3 +1,10 @@
+//---------------------------------navigation()---------------------------------                                                                         	
+// This function changes the current page to the next page. Uses a .3 sec fade	
+// to accomplish a smooth page transition.
+//---------------------------------Variables------------------------------------
+// c = The currently visible page that we want to hide.
+// n = The next page that we want to display.  
+//                                                      	
 function navigation(c,n){
 	$( c ).fadeOut(300);
 	setTimeout(function(){
@@ -5,6 +12,10 @@ function navigation(c,n){
 	}, 300);
 };
 
+//------------------------------triggerVisibility()-----------------------------                                                                        	
+// This function turns Daisy's speech bubble on and off as the "Water" checkbox	
+// on page 3.1 is checked.
+//
 function triggerVisibility() {
 	if (document.getElementById("w").checked == true) {
 	    document.getElementById("daisyBubble").style.visibility = "visible";
@@ -13,14 +24,27 @@ function triggerVisibility() {
 	}
 };
 
+//---------------------------------replaceAll()---------------------------------                                                                          	
+// This function replaces human readable ride names to SQLite readable names by	
+// replacing a single quote ' with two single quotes '' using a regex.
+// Credit to some saint on StackOverflow.
+//---------------------------------Variables------------------------------------
+// search = The string we are searching for to replace.
+// replace = The string we want to replace the prevous strong for.
+//
 String.prototype.replaceAll = function(search, replace){
     if (replace === undefined) {
         return this.toString();
     }
-
     return this.replace(new RegExp('[' + search + ']', 'g'), replace);
 };
 
+//---------------------------------shuffle()------------------------------------                                                                          	
+// This function shuffles the array we give it. Easy enough.	
+// Credit to some saint on StackOverflow.
+//---------------------------------Variables------------------------------------
+// array = The array we want to shuffle.
+//
 function shuffle(array) {
     var tmp, current, top = array.length;
 
@@ -34,12 +58,22 @@ function shuffle(array) {
     return array;
 };
 
+//---------------------------------sortCustom()---------------------------------                                                                        	
+// This function takes a set of rides and sorts them by Park, then Land, then 	
+// Rank to deliver on the routing promises of using the Custom Itinerary.
+//
+// This is an overly complicated way of doing this, if I knew more about SQLite 
+// I probably could have accomplished this in the regular CustomItinerary().
+//---------------------------------Variables------------------------------------
+// array = The array we want to sort.
+// sortQuery = The query used to grab the items from the database and sort them.
+//
 function sortCustom(array){
 	sbit = 1;
 	array = shuffle(array);
 	
 	if(array.length > 10){
-		array = array.slice(0, 10);
+		array = array.slice(0, 9);
 	}
 
 	for(var i=0; i<array.length; i++){
@@ -66,13 +100,16 @@ function sortCustom(array){
 				+ parkS[1] + " WHERE Name=" + nameS;
 	}
 	var sortQuery = "SELECT * FROM " + parkS[0] + " WHERE Name=" 
-					+ nameS + union + " ORDER BY Park, Land, Rank";
-	
-	console.log(sortQuery);
-	
+					+ nameS + union + " ORDER BY Park, Land, Rank DESC";
+
+	lastQuery = sortQuery;
 	selectRow(sortQuery, function (placeHolder) { });
 };
 
+//---------------------------------typeSelect()---------------------------------                                                                       	
+// This function is how we navigate a user to pages after the "Park" question. 	
+// Based on the chosen itinerary type, it may lead to an itinerary or more q's.
+//
 function typeSelect(){
 	if( cbit != 1 ){
 		randomItinerary(parkArray);
@@ -82,6 +119,9 @@ function typeSelect(){
 	};
 };
 
+//---------------------------------parkSelect()---------------------------------                                                                       	
+// This function gives us SQLite strings for use in our dynamic querys.
+//
 function parkSelect(park){
 	var parkS = [];
 	
@@ -97,6 +137,16 @@ function parkSelect(park){
 	return parkS;
 };
 
+//------------------------------customItinerary()-------------------------------                                                                       	
+// This function takes a set of rides and sorts them by Park, then Land, then 	
+// Rank to deliver on the routing promises of using the Custom Itinerary.
+//
+// This is an overly complicated way of doing this, if I knew more about SQLite 
+// I probably could have accomplished this in the regular CustomItinerary().
+//---------------------------------Variables------------------------------------
+// array = The array we want to sort.
+// sortQuery = The query used to grab the items from the database and sort them.
+//
 function customItinerary(park,type,notType,height){
 	if( type.length == 1 ){
 		typeS = "'%" + type[0] + "%'";
@@ -144,10 +194,15 @@ function customItinerary(park,type,notType,height){
 					+ parkS[0] + " WHERE Type LIKE " 
 					+ typeS + nTypeS + " AND Height <='" 
 					+ height + "'" + union;
-	console.log(queryToSend);
+	lastQuery = queryToSend;
 	selectRow(queryToSend, function (placeHolder) { });
 };
-
+//---------------------------------()---------------------------------//
+//                                                                           	//
+// this function will change the current state of the game. The current state	//
+//
+//-----------------------------------Variables-----------------------------------//
+//                                                                           	//
 function randomItinerary(park){
 	sbit = 1;
 	parkS = parkSelect(park);
@@ -161,10 +216,16 @@ function randomItinerary(park){
 		rankS = "Rank < 33 AND Rank > 0";
 	};
 	
-	var queryToSend = "SELECT * FROM " + parkS[0] + " WHERE " + rankS + union + " ORDER BY Park";
+	var queryToSend = "SELECT * FROM " + parkS[0] + " WHERE " + rankS + union;
+	console.log(queryToSend);
 	selectRow(queryToSend, function (placeHolder) { });	
 };
-
+//---------------------------------()---------------------------------//
+//                                                                           	//
+// this function will change the current state of the game. The current state	//
+//
+//-----------------------------------Variables-----------------------------------//
+//                                                                           	//
 /** Select Rows from Table **/ 
 function selectRow(query, callBack){
 	var result = [];
@@ -180,7 +241,56 @@ function selectRow(query, callBack){
 		}, errorCB);
    });
 };
+//---------------------------------()---------------------------------//
+//                                                                           	//
+// this function will change the current state of the game. The current state	//
+//
+//-----------------------------------Variables-----------------------------------//
+//    
 
+function replaceQuery(name,height){
+	parkS = parkSelect(parkArray);
+	union = "";
+	if( parkArray.length > 1 ){
+		union = " UNION SELECT * FROM " 
+				+ parkS[1] + " WHERE Rank > 17 AND Height <='" 
+				+ height + "' AND Name !='" + name + "'";
+	}
+	var queryToSend = "SELECT * FROM " 
+					+ parkS[0] + " WHERE Rank > 17 AND Height <='" 
+					+ height + "' AND Name !='" + name + "'" + union;
+	
+	console.log(queryToSend);
+	selectSingle(queryToSend, function (placeHolder) { });	
+};
+
+function selectSingle(query, callBack){
+	var result = [];
+	db.transaction(function (tx) {
+		tx.executeSql(query, [], function(tx, rs){
+			for(var i=0; i<rs.rows.length; i++){
+				var row = rs.rows.item(i);
+				result[i] = row['Name'].toString();
+			}
+		console.log(result);
+		replaceMe(result);
+		callBack(result); 
+		}, errorCB);
+   });
+};
+
+function replaceMe(array){
+	shuffle(array);
+	array = array.slice(0,1);
+	console.log(array);
+	replace = array[0];
+};
+//---------------------------------()---------------------------------//
+//                                                                           	//
+// this function will change the current state of the game. The current state	//
+//
+//-----------------------------------Variables-----------------------------------//
+//                                                                           	//
 function activityDisplay(query, callBack){
 	console.log(query);
 	var result = [];
@@ -203,11 +313,12 @@ function activityDisplay(query, callBack){
    });
 };
 
-function sortReturn(array){
-	itineraryArray = array;
-	console.log(itineraryArray);
-};
-
+//---------------------------------()---------------------------------//
+//                                                                           	//
+// this function will change the current state of the game. The current state	//
+//
+//-----------------------------------Variables-----------------------------------//
+//                                                                           	//
 function sendToGui(array){	
 	if(sbit != 1){
 		if(cbit != 1){
@@ -216,12 +327,15 @@ function sendToGui(array){
 			sortCustom(array);
 		}
 	}else{
-	
+		if(cbit != 1){
+			array = shuffle(array);
+		}
 		if( array.length > 10 ){
 			for(var i=0; i<10; i++){
 				var table = document.getElementById ("iresults");
 				var row = table.insertRow (1);
 				row.className = "sResult";
+				row.id = 'row' + (10 - i);
 				var cell = row.insertCell (0);
 				cell.innerHTML = array[i];
 			}
@@ -230,6 +344,7 @@ function sendToGui(array){
 				var table = document.getElementById ("iresults");
 				var row = table.insertRow (1);
 				row.className = "sResult";
+				row.id = 'row' + (10 - i);
 				var cell = row.insertCell (0);
 				cell.innerHTML = array[i];
 			}
@@ -237,7 +352,12 @@ function sendToGui(array){
 		}
 	}
 };
-
+//---------------------------------()---------------------------------//
+//                                                                           	//
+// this function will change the current state of the game. The current state	//
+//
+//-----------------------------------Variables-----------------------------------//
+//                                                                           	//
 function pageFive(array){
 	$("#nm").html(array[0]);
 	$("#loc").html(array[1]);
@@ -251,6 +371,12 @@ function pageFive(array){
 	$("#rank").html(array[5]);
 };
 
+//---------------------------------()---------------------------------//
+//                                                                           	//
+// this function will change the current state of the game. The current state	//
+//
+//-----------------------------------Variables-----------------------------------//
+//                                                                           	//
 function clearGlobal(){
 	cbit = 0;
 	sbit = 0;
@@ -258,10 +384,17 @@ function clearGlobal(){
 	typeArray = [];
 	notTypeArray = [];
 	itineraryArray = [];
+	lastQuery = "";
+	replace = "--Swipe Again--";
 	document.getElementById("daisyBubble").style.visibility = "hidden";
 	$("#iresults").html('<tbody><tr class="hideme"></tr></tbody>');
 };
-
+//---------------------------------()---------------------------------//
+//                                                                           	//
+// this function will change the current state of the game. The current state	//
+//
+//-----------------------------------Variables-----------------------------------//
+//                                                                           	//
 function errorCB(){
 	console.log("Query not successful");
 };
