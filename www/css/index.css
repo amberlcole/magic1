@@ -51,19 +51,13 @@ tr{
 
 input[type="checkbox"] {
     width: 20px;
-    position: relative;
+	position: relative;
     left: -265px; 
     vertical-align: middle; 
     /* Double-sized Checkboxes */
     transform: scale(2,2);	
-	
-	/* OLD
-	float:left;
-	padding:10px;
-	transform:scale(2, 2);*/
 }
 
-/* NEW STUFF*/
 label {  
     width: 250px;      
     position: relative;
@@ -75,7 +69,6 @@ label {
 
 input[type="radio"] {
 	float:left;
-	margin-right: 0.8em;
 	transform:scale(2, 2);
 }
 
@@ -91,13 +84,25 @@ Div Classes
 	background-color:#FFFFFF;
 }
 
+.cont{
+	width:100%;
+	height:100%;
+	position:absolute;
+	background-color:#FFFFFF;
+}
+
 /* Portrait layout (default) */
 .app {
 	position:absolute;
     width:100%;   
-	height:100%;/* text area width */
     text-align:center;
 
+}
+
+.napp{
+	display:inline;
+	width:100%;
+	text-align:center;
 }
 
 .q{
@@ -111,12 +116,12 @@ Div Classes
 
 .header{
 	width:100%;
-	height:10%;
+	height:15%;
 	margin-bottom:1%;
 	background-color:#003366;
 	font-family:"disney";
 	color:#FFFFFF;
-	font-size:30px;
+	font-size:40px;
 	font-weight:bold;
 	text-align:center;
 }
@@ -127,7 +132,9 @@ Div Classes
 
 /* NEW*/
 .checkBoxes{
+	line-height:20px;
     margin-left: 10px;
+	margin-top:15px;
 }
 
 /****************************************************
@@ -192,10 +199,6 @@ Buttons and Links
 	display:none;
 }
 
-#save{
-	float:right;
-}
-
 .back{
 	color:#FFCC33;
 	display:block;
@@ -226,7 +229,7 @@ Buttons and Links
 	margin:0 auto;
 	width:100%;
 	font-size:25px;
-	line-height:30px;
+	line-height:25px;
 	text-transform:uppercase;
 	text-align:left;
 	white-space:nowrap;
@@ -234,7 +237,7 @@ Buttons and Links
 /*NEW*/
 .buttons {
 	border: 0px;
-    align: middle;
+    text-align: center;
     vertical-align:bottom;
     margin-bottom: 3%;
     width:60%;
@@ -249,7 +252,7 @@ Images  NEW
     border: 0px;
     float: right;
     position: relative;
-    left: 10px;  
+    left: 20px;  
     vertical-align: middle;
 }
 
@@ -257,7 +260,7 @@ Images  NEW
     border: 0px;
     float: right;
     position: relative;
-    right: 47px;
+    right: 27px;
     bottom: 3;  
     vertical-align: middle;
     visibility: hidden;

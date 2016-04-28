@@ -4,12 +4,14 @@ $(document).ready(function (){
 	$("#cbutton").on("tap", function(e){
 		cbit = 1;
 		navigation( page1,page2 );
+		$("#c2").fadeOut("fast");
 		e.preventDefault();
 	});
 	
     //Random button actions
 	$("#rbutton").on("tap", function(e){
 	    navigation(page1, page2);
+		$("#c2").fadeOut("fast");
 		e.preventDefault();
 	});
 	
@@ -25,7 +27,7 @@ $(document).ready(function (){
 	});
 
 /************Page 2 Javascript************/	
-	$("#p2r").on("tap", function(e){
+	$("#back1").on("tap", function(e){
 		cbit = 0;
 		parkArray = [];
 		navigation(page2,page1);
@@ -47,7 +49,7 @@ $(document).ready(function (){
 	});
 	
 /************Page 3 Javascript************/	
-	$("#p3r").on("tap", function(e){
+	$("#back2").on("tap", function(e){
 		navigation(page3,page2);
 		$("input:checkbox[class=type]").attr("checked", false);	
 		e.preventDefault();
@@ -76,7 +78,7 @@ $(document).ready(function (){
 	});
 	
 /************Page 3.1 Javascript************/			
-	$("#p31r").on("tap", function(e){
+	$("#back3").on("tap", function(e){
 		navigation(page31,page3);
 		$('input:[name="height"]').attr("checked", false);	
 		e.preventDefault();
@@ -95,7 +97,7 @@ $(document).ready(function (){
 	});
 
 /************Page 4 Javascript************/		
-	$("#p1r").on("tap", function(e){
+	$("#new").on("tap", function(e){
 		navigation(page4,page1);
 		$('input:checkbox').attr("checked", false);	
 		$('input:radio').attr("checked", false);
@@ -131,6 +133,7 @@ $(document).ready(function (){
 		selected = selected.replaceAll("'","''");
 		replaceQuery(selected,heightReq);
 		
+		//FIX THIS?
 		$(this).hide();
 		$(this).html("<td>" + replace + "</td>");
 		$(this).fadeIn(1000);
@@ -138,7 +141,7 @@ $(document).ready(function (){
 	
 /************Page 5 Javascript************/			
 	//b3?
-	$("#p5r").on("tap", function(e){
+	$("#back4").on("tap", function(e){
 		navigation(page5,page4);
 		e.preventDefault();
 	});

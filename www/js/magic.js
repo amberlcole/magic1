@@ -301,10 +301,12 @@ function activityDisplay(query, callBack){
 				var row = rs.rows.item(i);
 				result[0] = row['Name'].toString();
 				result[1] = row['Park'].toString();
+				result[6] = row['Land'];
 				result[2] = row['Description'].toString();
 				result[3] = row['Height'].toString();
 				result[4] = row['FastPass'].toString();
 				result[5] = row['Rank'].toString();
+				result[7] = row['IMG'];
 			}
 		console.log(result);
 		pageFive(result);
@@ -359,15 +361,21 @@ function sendToGui(array){
 //-----------------------------------Variables-----------------------------------//
 //                                                                           	//
 function pageFive(array){
+	$("#pic").attr("src", array[7]);
 	$("#nm").html(array[0]);
 	$("#loc").html(array[1]);
+	$("#la").html(array[6]);
 	$("#des").html(array[2]);
 	if(array[4] == "true"){
 		$("#fp").html("Fastpass Available");
 	}else{
 		$("#fp").html("Fastpass Not Available");
 	}
-	$("#hr").html(array[3]);
+	if(array[3] == "0"){
+		$("#hr").html("None");
+	}else{
+		$("#hr").html(array[3]);
+	}
 	$("#rank").html(array[5]);
 };
 

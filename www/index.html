@@ -30,7 +30,7 @@
 					<strong>Tap to close</strong>
 				</center>
 			</div>
-			<div id="c2" class="container">
+			<div id="c2" class="cont">
 			</div>
 			
 			<!-- Choosing Algorithm Page -->
@@ -40,7 +40,7 @@
 				</div>
 				
 				<h1>How would you like your magic made?</h1>
-				<img src="img/MickeyWizard.gif" alt="MickeyWizard.gif" style="width:55%;height:45%;">
+				<img src="img/MickeyWizard.gif" alt="MickeyWizard.gif" style="width:70%;">
 				
 				<div class="buttonsDiv">
                     <input id="cbutton" class="buttons" type="image" src="img/customButton.gif">
@@ -53,8 +53,7 @@
 			<!-- Question Page 1-->
 			<div class="app" id="page2">
 				<div class="header">
-					<button id="p2r" class="back">Back</button>
-					Magic Itinerary Maker
+					Question #1
 				</div>
 				
 				<h1>Which parks will you be visiting?</h1>
@@ -71,17 +70,17 @@
                 </form>
                 <div class="buttonsDiv">
                     <input id="q1" class="buttons" type="image" src="img/nextButton.gif">
-                </div>
+					<input id="back1" class="buttons" type="image" src="img/backButton.gif">
+				</div>
 			</div>
 			
 			<!-- Custom: Question Page 2 -->
 			<div class="app" id="page3">
 				<div class="header">
-					<button id="p3r" class="back">Back</button>
-					Magic Itinerary Maker
+					Question #2
 				</div>
 				
-				<h1>What type of rides would you like included in your itinerary?</h1>
+				<h1>Choose at least two types of rides you would like in your itinerary!</h1>
 				
 				<form id="typeq" class="question">
                     <div class="checkBoxes">
@@ -103,81 +102,84 @@
 				</form>
                 <div class="buttonsDiv">
                     <input id="q2" class="buttons" type="image" src="img/nextButton.gif">
-                </div>
+					<input id="back2" class="buttons" type="image" src="img/backButton.gif">
+				</div>
 			</div>
 			
 			<!-- Custom: Question Page 3 -->
 			<div class="app" id="page31">
 				<div class="header">
-					<button id="p31r" class="back">Back</button>
-					Magic Itinerary Maker
+					Question #3
 				</div>
-				<h1>What is the height of your shortest party member?</h1>
+				<h1>Do you have any height restrictions to consider?</h1>
 				
 				<form id="heightq" class="question">
 					<div class="checkBoxes">
 						<input id="thirtytwo" type="radio" name="height" value="32">
-						<label for="thirtytwo">32 inches</label>
+						<label for="thirtytwo">32 in</label>
 					
 						<input id="thirtyfive" type="radio" name="height" value="35">
-						<label for="thirtyfive">35 inches</label>
+						<label for="thirtyfive">35 in</label>
 					
 						<input id="forty" type="radio" name="height" value="40">
-						<label for="forty">40 inches</label>
+						<label for="forty">40 in</label>
 					
 						<input id="fortytwo" type="radio" name="height" value="42">
-						<label for="fortytwo">42 inches</label>
+						<label for="fortytwo">42 in</label>
 					
 						<input id="fortysix" type="radio" name="height" value="46">
-						<label for="fortysix">46 inches</label>
+						<label for="fortysix">46 in</label>
 
 						<input id="fortyeight" type="radio" name="height" value="48">
-						<label for="fortyeight">48 inches</label>
+						<label for="fortyeight">48 in</label>
 					
 						<input id="n" type="radio" name="height" value="none">
-						<label for="fortytwo">No Height Restrictions</label>
+						<label for="fortytwo">No Restrictions</label> 
 					</div>
 				</form>
                 <div class="buttonsDiv">
                     <input id="q3" class="buttons" type="image" src="img/nextButton.gif">
-                </div>
+					<input id="back3" class="buttons" type="image" src="img/backButton.gif">
+				</div>
 			</div>
 			
 			<!-- Activity Display Page -->
 			<div class="app" id="page4">
 				<div class="header">
-					<button id="p1r" class="back">New</button>
 					My Itinerary
-					<button id="save" class="back">Save</button>
 				</div>
-
-				<table class="app" id="iresults" border="0px">
+				<div  class="napp">
+				<table id="iresults" border="0px">
 					<tbody>
 					<tr class="hideme"></tr>
 					</tbody>
 				</table>	
+				</div>
+				<div class="buttonsDiv">
+                    <input id="new" class="buttons" type="image" src="img/newButton.gif" style="width:50%;"><br>
+					<input id="save" class="buttons" type="image" src="img/saveButton.gif" style="width:50%;opacity:.4;">
+				</div>
 			</div>
 			
 			<div id="page5" class="app">
 				<div class="header">
-					<button id="p5r" class="back">Back</button>
-					Magic Itinerary Maker
+					<span id="nm"></span>
 				</div>
 				
-				<h1 id="nm"></h1>
-				<img src="img/hm.jpeg" width="60%">
+				<img id="pic" width="60%">
 				<div id="adescription">
-				Location: <span id="loc"></span><br>
-				Height Requirement: <span id="hr"></span><br>
-				<span id="fp"></span><br>
-				Description: <span id="des"></span><br>
-				MIM Ranking: <span id="rank"></span>
+				<i><span id="des"></span></i><p>
+				<span id="la"></span>, <span id="loc"></span><br>
+				<b>Height Requirement:</b> <span id="hr"></span><br>
+				<b><span id="fp"></span></b><br>
+				<b>MIM Ranking:</b> <span id="rank"></span>
 				</div>
-
+				
+				<div class="buttonsDiv">
+					<input id="back4" class="buttons" type="image" src="img/backButton.gif">
+				</div>
 			</div>
 		</div>
-		
         <script type="text/javascript" src="cordova.js"></script>
-        
     </body>
 </html>
